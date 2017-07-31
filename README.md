@@ -1,104 +1,24 @@
-# Code Challenge
+# README
 
-Create a micro service to shorten urls like bit.ly or TinyURL do.
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-## Rules
+Things you may want to cover:
 
-1. The service must expose HTTP endpoints according to the API Docs below.
-2. Use your technology of choice, there's no restrictions. Instructions for the installation must be detailed in the INSTALL.md file.
-3. Write the tests you consider necessary.
+* Ruby version
 
--------------------------------------------------------------------------
+* System dependencies
 
-## API Docs
+* Configuration
 
-### POST /urls
+* Database creation
 
-```
-POST /urls
-Content-Type: "application/json"
+* Database initialization
 
-{
-  "url": "http://example.com",
-  "code": "example"
-}
-```
+* How to run the test suite
 
-##### Params:
+* Services (job queues, cache servers, search engines, etc.)
 
-* **url**: URL to shorten. Required
-* code: Desired shortcode. Alphanumeric, case-sensitive 6 chars lenght.
+* Deployment instructions
 
-Note: If code is not provided, a random code, with the same constraints, must be generated
-
-##### Response:
-
-```
-201 Created
-Content-Type: "application/json"
-
-{
-  "code": :shortcode
-}
-```
-
-##### Errors:
-
-* Bad Request: If ```url``` is not present
-* Conflict: If the the desired shortcode is already in use.
-* Unprocessable Entity: If the shortcode doesn't doesn't comply with its description.
-
-
-### GET /:code
-
-```
-GET /:code
-Content-Type: "application/json"
-```
-
-##### Params:
-* **code**:  Encoded URL shortcode
-
-##### Response
-
-It's a redirect response including the target URL in its `Location` header.
-
-```
-HTTP/1.1 302 Found
-Location: http://www.example.com
-```
-
-##### Errors
-
-* Not Found: If the `shortcode` cannot be found
-
-### GET /:code/stats
-
-```
-GET /:code/stats
-Content-Type: "application/json"
-```
-
-##### Params:
-* **code**:  Encoded URL shortcode
-
-##### Response
-
-```
-200 OK
-Content-Type: "application/json"
-
-{
-  "created_at": "2012-04-23T18:25:43.511Z",
-  "last_usage": "2012-04-23T18:25:43.511Z",
-  "usage_count": 1
-}
-```
-
-* **`start_date`**: [ISO8601](http://en.wikipedia.org/wiki/ISO_8601) formatted date when the shortened URL was created
-* **`usage_count`**: Number of requests to the endpoint `GET /code`
-* `last_usage`: Date of the last time the shortened URL was requested. Not included if it has never been requested.
-
-##### Errors
-
-* Not Found: If the `shortcode` cannot be found
+* ...
