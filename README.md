@@ -4,7 +4,7 @@
 
 This is a simple implementation of a URL Shortener service that allows user to submit a URL and get a code and shorter URL in return.
 
-### Instalation
+### Installation
 
 1) Clone this repository:
 ```
