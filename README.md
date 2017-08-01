@@ -35,7 +35,7 @@ PARAMETERS
 
 Test with : 
 ```
-curl -H "Content-Type: application/json" -X POST -d '{"url":"http://www.example.com","code":"testcd"}' http://localhost:5000/urls
+curl -H "Content-Type: application/json" -X POST -d '{"url":"http://www.example.com","code":"testcd"}' http://localhost:3000/urls
 ```
 
 
@@ -52,7 +52,7 @@ PARAMETERS
 
 Test with:
 ```
-curl -H "Content-Type: application/json" -X GET http://localhost:5000/testcd -L
+curl -H "Content-Type: application/json" -X GET http://localhost:3000/testcd -L
 ````
 
 _**POST /[code]/stats**_
@@ -68,7 +68,7 @@ PARAMETERS
 
 Test with:
 ```
-curl -H "Content-Type: application/json" -X GET http://localhost:5000/testcd/stats
+curl -H "Content-Type: application/json" -X GET http://localhost:3000/testcd/stats
 ```
 
 ### Rationale & Potential enhancements
