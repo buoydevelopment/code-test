@@ -102,3 +102,11 @@ Content-Type: "application/json"
 ##### Errors
 
 * Not Found: If the `shortcode` cannot be found
+
+## Delivery Steps: 
+
+1. Create a branch from `master` named `base` and push all the third-party code needed (Libraries, Frameworks, etc.).
+2. Create a branch from `base` named `code-test` and push your own code (Remember to update the Readme file providing any instructions on how to run the project if needed).
+4. Create a Pull Request from `code-test` to `base` for us to review.
+
+Thank you and good luck!
