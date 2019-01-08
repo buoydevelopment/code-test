@@ -105,8 +105,8 @@ Content-Type: "application/json"
 
 ## Delivery Steps: 
 
-1. Create a branch from `master` named `base` and push all the third-party code needed (Libraries, Frameworks, etc.).
-2. Create a branch from `base` named `code-test` and push your own code (Remember to update the Readme file providing any instructions on how to run the project if needed).
-4. Create a Pull Request from `code-test` to `base` for us to review.
+1. Fork this repo to your own Github account.
+2. Implement the functionality, including any instructions to setup and run the application.
+3. Submit a PR to the `master` branch of this repository.
 
 Thank you and good luck!
