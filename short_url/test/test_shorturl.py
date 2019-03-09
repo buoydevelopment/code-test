@@ -8,8 +8,6 @@ from api.api import is_valid
 
 
 class ShortUrlTest(unittest.TestCase):
-    # initialization logic for the test suite declared in the test module
-    # code that is executed before all tests in one test run
 
     server_pid = 0
 
@@ -27,6 +25,7 @@ class ShortUrlTest(unittest.TestCase):
             child.kill()
         parent.kill()
 
+    # Scenarios
     def test_valid_short_code(self):
         response = requests.post("http://localhost:5000/urls", json={'url': 'http://example.com', 'code': 'test01'})
         self.assertEqual(response.status_code, 201)
@@ -59,6 +58,10 @@ class ShortUrlTest(unittest.TestCase):
         self.assertDictEqual({'code': 'test04'}, json.loads(response.text))
         response = requests.get("http://localhost:5000/test04")
         self.assertEqual(response.text, "Location: http://example4.com")
+
+    def test_get_url_from_not_valid_short_code(self):
+        response = requests.get("http://localhost:5000/test05")
+        self.assertEqual(response.status_code, 400)
 
 if __name__ == '__main__':
     unittest.main()

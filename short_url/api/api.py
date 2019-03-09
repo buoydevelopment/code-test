@@ -12,10 +12,12 @@ letters_and_digits = string.ascii_letters + string.digits
 
 
 def is_valid(short_code):
+    """ Checks if short_code complies with requirements: alphanumeric and length = 6."""
     return re.match(r'[A-Za-z0-9]', short_code) and len(short_code) == 6
 
 
 def exist(short_code):
+    """ Checks if short_code is already in use."""
     return short_code in stored_urls.keys()
 
 
@@ -29,7 +31,6 @@ def short_url():
     """ Relates a short alphanumeric code which will represents a long url."""
     content = request.get_json()
     print json.dumps(content)
-    short_code = ""
     # checks if code is missing. If yes, a new code is generated.
     if 'code' in content.keys():
         # validate short code
@@ -44,13 +45,14 @@ def short_url():
         short_code = generate_random_code()
         print short_code
 
-    # stores url into a dictionary.
+    # creates new element
     new_url_item = {
         'url': content['url'],
         'created_at': datetime.datetime.utcnow().isoformat(),
         'last_usage': datetime.datetime.utcnow().isoformat(),
         'usage_count': 0}
 
+    # stores new element
     stored_urls[short_code] = new_url_item
 
     response = {'code': short_code}

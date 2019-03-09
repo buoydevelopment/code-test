@@ -21,7 +21,7 @@ api.api.short_url.methods = ['POST']
 
 
 def main():
-    # Registering main server functions.
+    """ Registering main server functions. """
     app.add_url_rule('/urls', 'urls', view_func=api.api.short_url)
     app.add_url_rule('/<short_name>', 'get_url', view_func=api.api.get_url)
     app.add_url_rule('/<short_name>/stats', 'stats', view_func=api.api.get_stats)
