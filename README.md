@@ -113,7 +113,7 @@ Thank you and good luck!
 
 -------------------------------------------------------------------------
 
-##### About FL solution
+## About FL solution
 
 ### Solution structure:
 
@@ -122,16 +122,16 @@ Thank you and good luck!
 * test: Contains unit tests for training all api functions
 
 
-### How to run...
+### How to ...
 
-## Run Short_URL service
+#### Run Short_URL service
 
 PyCharm is used for this purpouse
 
 1. Opens project in PyCharm
 2. Performs right click over /app/service.py and select Run
 
-## Run tests
+#### Run tests
 
 1. Opens project in PyCharm
 2. Performs right click over /test/test_shorturl.py and select Run
