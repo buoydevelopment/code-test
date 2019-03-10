@@ -1,4 +1,5 @@
 import time
+import datetime
 import json
 import unittest
 import psutil as psutil
@@ -61,6 +62,32 @@ class ShortUrlTest(unittest.TestCase):
 
     def test_get_url_from_not_valid_short_code(self):
         response = requests.get("http://localhost:5000/test05")
+        self.assertEqual(response.status_code, 400)
+
+    def test_url_stats(self):
+        response = requests.post("http://localhost:5000/urls", json={'url': 'http://example6.com', 'code': 'test06'})
+        created_at = datetime.datetime.utcnow().isoformat()
+        self.assertEqual(response.status_code, 201)
+        self.assertDictEqual({'code': 'test06'}, json.loads(response.text))
+
+        response = requests.get("http://localhost:5000/test06")
+        time.sleep(2)
+        response = requests.get("http://localhost:5000/test06")
+        time.sleep(2)
+        response = requests.get("http://localhost:5000/test06")
+        last_usage = datetime.datetime.utcnow().isoformat()
+
+        response = requests.get("http://localhost:5000/test06/stats")
+        json_resp = json.loads(response.text)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json_resp['url'], "http://example6.com")
+        self.assertEqual(json_resp['usage_count'], 3)
+        self.assertTrue(json_resp['created_at'] <= created_at)
+        self.assertTrue(json_resp['last_usage'] <= last_usage)
+
+    def test_url_stats_with_wrong_short_code(self):
+        response = requests.get("http://localhost:5000/invalid_code/stats")
         self.assertEqual(response.status_code, 400)
 
 if __name__ == '__main__':
