@@ -103,10 +103,35 @@ Content-Type: "application/json"
 
 * Not Found: If the `shortcode` cannot be found
 
-## Delivery Steps: 
+## Delivery Steps:
 
 1. Fork this repo to your own Github account.
 2. Implement the functionality, including any instructions to setup and run the application.
 3. Submit a PR to the `master` branch of this repository.
 
 Thank you and good luck!
+
+-------------------------------------------------------------------------
+
+##### About FL solution
+
+### Solution structure:
+
+* api: Contains all functions related to urls management
+* app: Contains functions about setting up of service
+* test: Contains unit tests for training all api functions
+
+
+### How to run...
+
+## Run Short_URL service
+
+PyCharm is used for this purpouse
+
+1. Opens project in PyCharm
+2. Performs right click over /app/service.py and select Run
+
+## Run tests
+
+1. Opens project in PyCharm
+2. Performs right click over /test/test_shorturl.py and select Run
