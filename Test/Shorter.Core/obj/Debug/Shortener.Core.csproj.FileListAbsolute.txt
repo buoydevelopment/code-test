@@ -1,0 +1,15 @@
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\bin\Debug\Shorter.Core.dll
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\bin\Debug\Shorter.Core.pdb
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\obj\Debug\Shorter.Core.dll
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\obj\Debug\Shorter.Core.pdb
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\obj\Debug\Shortener.Core.csprojResolveAssemblyReference.cache
+C:\Users\Dlaila\Source\Repos\urlshortener\Core\Shorter.Core\obj\Debug\Shortener.Core.csprojResolveAssemblyReference.cache
+C:\Users\Dlaila\Source\Repos\urlshortener\Core\Shorter.Core\bin\Debug\shortener.Core.dll
+C:\Users\Dlaila\Source\Repos\urlshortener\Core\Shorter.Core\bin\Debug\shortener.Core.pdb
+C:\Users\Dlaila\Source\Repos\urlshortener\Core\Shorter.Core\obj\Debug\shortener.Core.dll
+C:\Users\Dlaila\Source\Repos\urlshortener\Core\Shorter.Core\obj\Debug\shortener.Core.pdb
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\bin\Debug\shortener.Core.dll
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\bin\Debug\shortener.Core.pdb
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\obj\Debug\Shortener.Core.csproj.CoreCompileInputs.cache
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\obj\Debug\shortener.Core.dll
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\obj\Debug\shortener.Core.pdb
