@@ -920,6 +920,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
+          "Microsoft.EntityFrameworkCore": "2.2.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.6"
         },
         "compile": {
@@ -3521,11 +3522,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Service\\Test.Service.csproj",
+      "projectUniqueName": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Service\\Test.Service.csproj",
       "projectName": "Test.Service",
-      "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Service\\Test.Service.csproj",
+      "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Service\\Test.Service.csproj",
       "packagesPath": "C:\\Users\\Analia Ferrero\\.nuget\\packages\\",
-      "outputPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Service\\obj\\",
+      "outputPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Service\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -3546,14 +3547,14 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
-            "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Shorter.Core\\Shortener.Core.csproj": {
-              "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Shorter.Core\\Shortener.Core.csproj"
+            "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Shorter.Core\\Shortener.Core.csproj": {
+              "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Shorter.Core\\Shortener.Core.csproj"
             },
-            "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Data\\Test.Data.csproj": {
-              "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Data\\Test.Data.csproj"
+            "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Data\\Test.Data.csproj": {
+              "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Data\\Test.Data.csproj"
             },
-            "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Dto\\Test.Dto.csproj": {
-              "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Dto\\Test.Dto.csproj"
+            "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Dto\\Test.Dto.csproj": {
+              "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Dto\\Test.Dto.csproj"
             }
           }
         }

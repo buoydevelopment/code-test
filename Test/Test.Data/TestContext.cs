@@ -8,7 +8,9 @@ namespace Test.Data
 {
     public class TestContext : DbContext
     {
-
+        public TestContext()
+        {
+        }
         public TestContext(DbContextOptions<TestContext> ConnectionStrings)
          : base(ConnectionStrings)
         {

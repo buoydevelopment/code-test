@@ -9,97 +9,30 @@ using Service.Common;
 using Test.Dto;
 using Test.Service.Interfaces;
 using Shortener.Core.Extensions;
+using Shortener.Core;
+using Test.Data;
+using System.Linq;
+using Test.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Test.Service.Services
 {
     public class UrlService : IUrlService
     {
-      
-
-        public async Task<ServiceResult<UrlDto>> GetByID(string Url)
+        private readonly TestContext DB;
+       
+        public UrlService()
         {
-            var result = new ServiceResult<UrlDto>();
-
-            try
-            {
-
-                UrlDto model = new UrlDto();
-                model.TargetUrl = this.MakeTinyUrl(Url);
-
-                result.Response = model;
-
-            }
-            catch (Exception e)
-            {
-                result.AddError("", e.InnerException.ToString());
-            }
-
-            return result;
+            DB = new TestContext();
+           
         }
-
        
 
-        protected string ToTinyURLS(string txt)
+        public async Task<UrlDto> GetUrl(string Code)
         {
-            Regex regx = new Regex("http://([\\w+?\\.\\w+])+([a-zA-Z0-9\\~\\!\\@\\#\\$\\%\\^\\&amp;\\*\\(\\)_\\-\\=\\+\\\\\\/\\?\\.\\:\\;\\'\\,]*)?", RegexOptions.IgnoreCase);
-
-            MatchCollection mactches = regx.Matches(txt);
-
-            foreach (Match match in mactches)
-            {
-                string tURL = MakeTinyUrl(match.Value);
-                txt = txt.Replace(match.Value, tURL);
-            }
-
-            return txt;
-        }
-
-        public  string MakeTinyUrl(string Url)
-        {
-            try
-            {
-                if (Url.Length <= 12)
-                {
-                    return Url;
-                }
-                if (!Url.ToLower().StartsWith("http") && !Url.ToLower().StartsWith("ftp"))
-                {
-                    Url = "http://" + Url;
-                }
-                var request = WebRequest.Create("http://tinyurl.com/api-create.php?url=" + Url);
-                var res = request.GetResponse();
-                string text;
-                using (var reader = new StreamReader(res.GetResponseStream()))
-                {
-                    text = reader.ReadToEnd();
-                }
-                return text;
-            }
-            catch (Exception)
-            {
-                return Url;
-            }
-        }
-
-        public async Task<ServiceResult<UrlDto>> GetUrl(string Url)
-        {
-            var result = new ServiceResult<UrlDto>();
-
-            try
-            {
-
-                UrlDto model = new UrlDto();
-                model.TargetUrl = Url.ValidateUrl();
-
-                result.Response = model;
-
-            }
-            catch (Exception e)
-            {
-                result.AddError("", e.InnerException.ToString());
-            }
-
-            return result;
+            return await (from x in DB.Urls.Where(x => x.Code == Code)
+                          select new UrlDto { Code = x.Code, SourceUrl = x.SourceUrl, Usage_Count=x.Usage_Count, Last_Usage = x.Last_Usage }).SingleOrDefaultAsync();
         }
 
         public async Task<ServiceResult<string>> CreateShortCode(SourceUrlDto entity)
@@ -108,11 +41,24 @@ namespace Test.Service.Services
 
             try
             {
+                Boolean isValid = true;
+               try
+                {
+                    entity.Url.ValidateUrl();
+                }
+                catch(Exception)
+                {
+                    result.AddError("", "Invalid Url");
+                    isValid = false;
+                }
+              
+                if(isValid)
+                {
+                    var codeResult = await this.GenerateShortCode(entity);
+                    result.Response = codeResult.Code.ToString();
+                }
 
-                UrlDto model = new UrlDto();
-                model.TargetUrl = entity.Url.ValidateUrl();
-
-                result.Response = model.TargetUrl;
+                return result;
 
             }
             catch (Exception e)
@@ -122,5 +68,69 @@ namespace Test.Service.Services
 
             return result;
         }
+
+        private async Task<Url> GenerateShortCode(SourceUrlDto sourceUrl)
+        {
+            
+            var existing = await this.IsAlreadyShortened(sourceUrl.Url);
+            if (existing != null)
+            {
+                existing.Usage_Count = existing.Usage_Count + 1;
+                existing.Last_Usage = DateTime.Now;
+                await DB.SaveChangesAsync();
+
+                return existing;
+            }
+            else
+            {
+                var code = await this.GetCode(sourceUrl);
+
+                var shortCode = new Url { Id = Guid.NewGuid().ToString(), SourceUrl = sourceUrl.Url, Start_Date = DateTime.UtcNow, Code = code };
+
+                DB.Urls.Add(shortCode);
+                await DB.SaveChangesAsync();
+
+                return shortCode;
+            }
+            
+        }
+        protected async Task<string> GetCode(SourceUrlDto sourceUrl)
+        {
+            var code ="";
+            var existing = await DB.Urls.SingleOrDefaultAsync(x=>x.SourceUrl== sourceUrl.Url);
+            if (existing == null)
+            {
+                if(sourceUrl.Code=="")
+                {
+                    code = ShortCodeGenerator.Generate();
+                }
+                else
+                {
+                    code = sourceUrl.Code;
+                 }
+             
+            }
+            else
+            {
+                code = existing.Code;
+            }
+            return code;
+        }
+
+        protected  async Task<Data.Entities.Url> IsAlreadyShortened(string url)
+        {
+            string baseLink = url.UrlToBase64();
+            var link = await DB.Urls.Where(x => x.SourceUrl == url).SingleOrDefaultAsync();
+            if (link == null)
+            {
+                return null;
+            }
+
+            return  link;
+        }
+
+
     }
+
+    
 }

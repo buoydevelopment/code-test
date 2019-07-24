@@ -29,13 +29,22 @@ namespace Test.Web.API.Controllers
        
 
         [HttpGet]
-        [Route("GetById")]
-        public async Task<IActionResult> GetById(string Url)
+        [Route("GetUrlByCode")]
+        public async Task<IActionResult> GetUrlByCode(string Code)
         {
 
             try
             {
-                return new OkObjectResult(await _urlService.GetUrl(Url));
+
+                var result = await _urlService.GetUrl(Code);
+                if (result == null)
+                {
+                    return this.NotFound();
+                }
+
+                return this.Redirect(result.SourceUrl);
+
+               
             }
             catch (Exception ex)
             {

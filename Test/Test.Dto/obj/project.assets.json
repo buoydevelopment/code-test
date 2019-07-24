@@ -692,11 +692,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Dto\\Test.Dto.csproj",
+      "projectUniqueName": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Dto\\Test.Dto.csproj",
       "projectName": "Test.Dto",
-      "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Dto\\Test.Dto.csproj",
+      "projectPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Dto\\Test.Dto.csproj",
       "packagesPath": "C:\\Users\\Analia Ferrero\\.nuget\\packages\\",
-      "outputPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test\\Test\\Test.Dto\\obj\\",
+      "outputPath": "C:\\PROYECTOS\\PROYECTOS_ACTUALES\\Prueba_dll\\Test_ShortUrl\\Test\\Test.Dto\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

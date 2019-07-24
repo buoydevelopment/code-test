@@ -13,3 +13,9 @@ C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\bin\Debug\shor
 C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\obj\Debug\Shortener.Core.csproj.CoreCompileInputs.cache
 C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\obj\Debug\shortener.Core.dll
 C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test\Test\Shorter.Core\obj\Debug\shortener.Core.pdb
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Shorter.Core\bin\Debug\shortener.Core.dll
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Shorter.Core\bin\Debug\shortener.Core.pdb
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Shorter.Core\obj\Debug\Shortener.Core.csprojAssemblyReference.cache
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Shorter.Core\obj\Debug\Shortener.Core.csproj.CoreCompileInputs.cache
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Shorter.Core\obj\Debug\shortener.Core.dll
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Shorter.Core\obj\Debug\shortener.Core.pdb

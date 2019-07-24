@@ -9,6 +9,7 @@ namespace Test.Data.Entities
     {
       
         public string SourceUrl { get; set; }
+        //public string Code { get; set; }
         public string TargetUrl { get; set; }
         public bool Valid { get; set; }
         public string Code { get; set; }
