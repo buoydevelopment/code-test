@@ -13,7 +13,7 @@
         public static string Generate()
         {
             var rand = new Random(Guid.NewGuid().GetHashCode());
-            return RandomCharacters(rand.Next(4, 7));
+            return RandomCharacters(rand.Next(6, 6));
         }
 
         private static string RandomCharacters(int length)

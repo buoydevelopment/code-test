@@ -27,12 +27,27 @@ namespace Test.Service.Services
             DB = new TestContext();
            
         }
-       
+        public async Task<LocationDto> GetUrl(string Code)
+        {
+            var url = await DB.Urls.Where(x => x.Code == Code).SingleAsync();
 
-        public async Task<UrlDto> GetUrl(string Code)
+            if(url!=null)
+            {
+                url.Usage_Count = url.Usage_Count + 1;
+                url.Last_Usage = DateTime.Now;
+                await DB.SaveChangesAsync();
+            }
+         
+
+
+            return await (from x in DB.Urls.Where(x => x.Code == Code)
+                          select new LocationDto { Location = x.SourceUrl }).SingleOrDefaultAsync();
+        }
+
+        public async Task<UrlDto> GetInfoUrl(string Code)
         {
             return await (from x in DB.Urls.Where(x => x.Code == Code)
-                          select new UrlDto { Code = x.Code, SourceUrl = x.SourceUrl, Usage_Count=x.Usage_Count, Last_Usage = x.Last_Usage }).SingleOrDefaultAsync();
+                          select new UrlDto { Code = x.Code, SourceUrl = x.SourceUrl, Usage_Count=x.Usage_Count, Last_Usage = x.Last_Usage , Created= x.Start_Date}).SingleOrDefaultAsync();
         }
 
         public async Task<ServiceResult<string>> CreateShortCode(SourceUrlDto entity)
@@ -75,10 +90,6 @@ namespace Test.Service.Services
             var existing = await this.IsAlreadyShortened(sourceUrl.Url);
             if (existing != null)
             {
-                existing.Usage_Count = existing.Usage_Count + 1;
-                existing.Last_Usage = DateTime.Now;
-                await DB.SaveChangesAsync();
-
                 return existing;
             }
             else
@@ -129,7 +140,7 @@ namespace Test.Service.Services
             return  link;
         }
 
-
+      
     }
 
     

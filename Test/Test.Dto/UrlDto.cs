@@ -9,6 +9,7 @@ namespace Test.Dto
         public DateTime? Last_Usage { get; set; }
         public string Code { get; set; }
         public int Usage_Count { get; set; }
+        public DateTime? Created { get; set; }
     }
 
     public class SourceUrlDto
@@ -16,4 +17,9 @@ namespace Test.Dto
         public string Url { get; set; }
         public string Code { get; set; }
     }
+
+    public class LocationDto
+    {
+        public string Location { get; set; }
     }
+}

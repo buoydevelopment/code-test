@@ -39,10 +39,10 @@ namespace Test.Web.API.Controllers
                 var result = await _urlService.GetUrl(Code);
                 if (result == null)
                 {
-                    return this.NotFound();
+                    return NotFound();
                 }
 
-                return this.Redirect(result.SourceUrl);
+                return Ok(result);
 
                
             }
@@ -53,8 +53,32 @@ namespace Test.Web.API.Controllers
             }
 
         }
-    
 
+        [HttpGet]
+        [Route("GetInfoUrlByCode/{Code}/stats")]
+        public async Task<IActionResult> GetInfoUrlByCode(string Code)
+        {
+
+            try
+            {
+
+                var result = await _urlService.GetInfoUrl(Code);
+                if (result == null)
+                {
+                    return this.NotFound();
+                }
+
+                return Ok(result);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
 
         [HttpPost]
         [Route("Create")]

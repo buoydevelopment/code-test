@@ -10,12 +10,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class HomeComponent {
 
-  public urls: Url;
+  public url: Url;
   formGroup: FormGroup;
   myBaseUrl: string;
   myHttp: HttpClient;
-  public codeResult: string;
-  myError: string;
+  public codeResult: string="";
+  myError: string="";
 
   constructor(http: HttpClient,
     @Inject('BASE_URL') baseUrl: string,
@@ -40,8 +40,11 @@ export class HomeComponent {
 
     this.myHttp.post<any>(this.myBaseUrl + 'api/Url/Create', this.formGroup.value).subscribe(result => {
       this.codeResult = result;
+      this.myError = "";
     },
-      (err: any) => { err => this.myError = err.error.errorMessages; });
+      (err: any) => {
+        this.myError = err.error.errorMessages;
+      });
   }
   
 
@@ -49,18 +52,43 @@ export class HomeComponent {
 
     var code = this.formGroup.controls["code"].value;
 
-    this.myHttp.get<any>(this.myBaseUrl + 'api/Url/GetUrlByCode/Code=' + code).subscribe(result => {
-      this.urls = result;
-    }, error => console.error(error));
+    this.myHttp.get<ResponseUrl>(this.myBaseUrl + 'api/Url/GetUrlByCode?Code=' + code).subscribe(result => {
+    
+      window.open(result.location, '_self');
+    },
+      (err: any) => {
+        this.myError = err.error.title;
+      });
   }
 
+
+  getUrlInfo() {
+
+    var code = this.formGroup.controls["code"].value;
+
+    this.myHttp.get<Url>(this.myBaseUrl + 'api/Url/GetInfoUrlByCode/' + code + '/stats').subscribe(result => {
+      this.url = result;
+      
+    },
+      (err: any) => {
+        this.myError = err.error.title;
+      });
+  }
 }
+
+
+
+
 
 interface Url {
   sourceUrl: string;
   targetUrl: string;
   last_Usage: Date;
-  cCode: string;
+  created: Date;
+  code: string;
   usage_Count: number;
 }
 
+interface ResponseUrl {
+  location: string;
+}
