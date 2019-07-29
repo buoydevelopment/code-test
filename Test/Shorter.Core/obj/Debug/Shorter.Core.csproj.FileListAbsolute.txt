@@ -1,0 +1,5 @@
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\bin\Debug\Shorter.Core.dll
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\bin\Debug\Shorter.Core.pdb
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\obj\Debug\Shorter.Core.csprojResolveAssemblyReference.cache
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\obj\Debug\Shorter.Core.dll
+C:\Users\Dlaila\Documents\Visual Studio 2013\Projects\url shortener\Core\Shorter.Core\obj\Debug\Shorter.Core.pdb

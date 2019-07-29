@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shorter.Core\Shortener.Core.csproj" />
+    <ProjectReference Include="..\Test.Data\Test.Data.csproj" />
+    <ProjectReference Include="..\Test.Dto\Test.Dto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Service.Common">
+      <HintPath>..\..\..\..\Devlights\JBDonaldson\Src\JBDonaldson.Common\bin\Debug\netcoreapp2.2\Service.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

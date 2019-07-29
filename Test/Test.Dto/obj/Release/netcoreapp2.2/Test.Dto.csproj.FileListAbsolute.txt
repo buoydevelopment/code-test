@@ -1,0 +1,9 @@
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\bin\Release\netcoreapp2.2\Test.Dto.deps.json
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\bin\Release\netcoreapp2.2\Test.Dto.dll
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\bin\Release\netcoreapp2.2\Test.Dto.pdb
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\obj\Release\netcoreapp2.2\Test.Dto.csprojAssemblyReference.cache
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\obj\Release\netcoreapp2.2\Test.Dto.csproj.CoreCompileInputs.cache
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\obj\Release\netcoreapp2.2\Test.Dto.AssemblyInfoInputs.cache
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\obj\Release\netcoreapp2.2\Test.Dto.AssemblyInfo.cs
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\obj\Release\netcoreapp2.2\Test.Dto.dll
+C:\PROYECTOS\PROYECTOS_ACTUALES\Prueba_dll\Test_ShortUrl\Test\Test.Dto\obj\Release\netcoreapp2.2\Test.Dto.pdb

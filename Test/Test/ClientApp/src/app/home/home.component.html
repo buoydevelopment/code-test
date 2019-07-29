@@ -1,0 +1,60 @@
+<h1>Hello, Guys!</h1>
+
+<p>Welcome to APP Test:</p>
+
+
+<form [formGroup]="formGroup">
+
+  <div class="form-horizontal">
+    <div class="input-group input-group-lg">
+      <input formControlName="url" class="form-control" placeholder="Paste the URL to be shorten..." />
+      <input formControlName="code" class="form-control" placeholder="Shortcode" />
+      <span class="input-group-btn">
+        <button class="btn btn-primary" (click)="onSubmit()">Shorten URL</button>
+      </span>
+    </div>
+
+    <div *ngIf="codeResult!=''">
+      <div class="alert alert-success">
+        {{codeResult}}
+      </div>
+    </div>
+
+    </div>
+
+    <br /><br />
+    <div class="form-horizontal">
+      <div class="input-group input-group-lg">
+        <input formControlName="code" class="form-control" placeholder="Paste the Code to navegate..." />
+        <span class="input-group-btn">
+          <button class="btn btn-primary" (click)="getUrl()">Navigate URL</button>
+        </span>
+      </div>
+    </div>
+
+    <br /><br />
+
+    <div class="form-horizontal">
+      <div class="input-group input-group-lg">
+        <input formControlName="code" class="form-control" placeholder="Paste the Code to review info..." />
+        <span class="input-group-btn">
+          <button class="btn btn-primary" (click)="getUrlInfo()">Get URL</button>
+        </span>
+      </div>
+
+      <div *ngIf="myError!=''">
+        <div class="alert alert-success" [ngClass]="{'alert alert-danger': myError!=''}">
+          {{myError}}
+        </div>
+      </div>
+
+      <div *ngIf="url!=null">
+        <div class="alert alert-success">
+          <h3> Created:  {{url.created}} </h3>
+          <h3 *ngIf="url.usage_Count>0"> Last usage:    {{url.last_Usage}}</h3>
+          <h3> usage_count:  {{url.usage_Count}}</h3>
+        </div>
+      </div>
+
+    </div>
+</form>
