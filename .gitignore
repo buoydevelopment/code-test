@@ -1,0 +1,10 @@
+# Folders
+
+venv
+.vscode
+.history
+__pycache__
+
+# Files
+
+test.db
