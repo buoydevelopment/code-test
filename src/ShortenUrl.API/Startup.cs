@@ -37,6 +37,8 @@ namespace shortenurl.api
                    //Set date configurations
                    options.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                   options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+
                });
 
 

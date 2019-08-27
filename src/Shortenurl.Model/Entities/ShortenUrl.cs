@@ -14,7 +14,7 @@ namespace shortenurl.model.Entities
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime LastUsage { get; set; }
+        public DateTime? LastUsage { get; set; }
 
         public int UsageCount { get; set; }
         
