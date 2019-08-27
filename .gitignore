@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/shortenurl.unit.test/bin/Debug/netcoreapp2.1
+/src/shortenurl.unit.test/obj
+/src/Shortenurl.Model/bin/Debug/netstandard2.0
+/src/Shortenurl.Model/obj
+/src/ShortenUrl.API/obj
+/src/ShortenUrl.API/bin/Debug/netcoreapp2.1
+/src/.vs
