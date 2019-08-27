@@ -13,7 +13,7 @@ GO
 
 CREATE PROCEDURE uspGetShortUrl
 (
-@Code varchar(6)
+@Code varchar(7)
 )
 AS
 
