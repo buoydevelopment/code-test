@@ -1,10 +1,10 @@
 import random
 import string
-from flask import request, redirect
+from flask import redirect
 from flask_restplus import Namespace, Resource
 from shorter_app.models import Shorter, Stats
 from shorter_app.repositories import ShorterRepository, StatsRepository
-from shorter_app.validator import validate_url, validate_code, ERROR_CODE_NOT_FOUND
+from shorter_app.validator import Validator, ERROR_CODE_NOT_FOUND
 
 from datetime import datetime
 
@@ -16,7 +16,7 @@ def generate_shortcode():
 
 
 @api.route("/healthcheck/")
-class Healthcheck(Resource):
+class HealtCheck(Resource):
     def get(self):
         return {"Service": "OK"}
 
@@ -32,16 +32,15 @@ class Url(Resource):
     @api.doc("Post shorter url")
     @api.response(201, "Short URL Created")
     def post(self):
-        content = request.json
-        url = content.get("url")
-        code = content.get("code")
+        url = self.api.payload.get("url")
+        code = self.api.payload.get("code")
 
-        error, status_code = validate_url(url)
+        error, status_code = Validator().validate_url(url)
         if error:
             return error, status_code
 
         if code:
-            error, status_code = validate_code(code)
+            error, status_code = Validator().validate_code(code)
             if error:
                 return error, status_code
         else:

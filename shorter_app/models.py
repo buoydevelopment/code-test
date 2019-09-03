@@ -22,8 +22,8 @@ class Stats(Base):
     id = Column(Integer, primary_key=True)
     code = Column(String, ForeignKey("shorter.code"), nullable=False)
     usage_count = Column(Integer, nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=True)
-    last_usage = Column(DateTime, default=datetime.utcnow, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=True, dt_format='rfc822')
+    last_usage = Column(DateTime, default=datetime.utcnow, nullable=True, dt_format='rfc822')
 
     def __init__(self, code, created_at):
         self.code = code

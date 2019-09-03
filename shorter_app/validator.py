@@ -13,27 +13,26 @@ ERROR_CODE_NOT_FOUND = "Code was not found"
 ERROR_URL_IS_REQUIRED = "URL is required"
 
 
-def is_valid_code(code):
-    return code and len(code) == 6 and re.match("^[a-zA-Z0-9_]+$", code)
+class Validator:
+    def is_valid_code(self, code):
+        return code and len(code) == 6 and re.match("^[a-zA-Z0-9_]+$", code)
 
+    def validate_url(self, url):
+        if not url:
+            return {"Error": ERROR_URL_IS_REQUIRED}, 400
 
-def validate_url(url):
-    if not url:
-        return {"Error": ERROR_URL_IS_REQUIRED}, 400
-    import validators
+        import validators
+        if not validators.url(url):
+            return {"Error": ERROR_INVALID_URL}, 400
 
-    if not validators.url(url):
-        return {"Error": ERROR_INVALID_URL}, 400
+        return None, None
 
-    return None, None
-
-
-def validate_code(code):
-    if is_valid_code(code):
-        result = ShorterRepository.get(code)
-        if result:
-            return {"Error": ERROR_DUPLICATED_CODE}, 409
+    def validate_code(self, code):
+        if self.is_valid_code(code):
+            result = ShorterRepository.get(code)
+            if result:
+                return {"Error": ERROR_DUPLICATED_CODE}, 409
+            else:
+                return None, None
         else:
-            return None, None
-    else:
-        return {"Error": ERROR_INVALID_CODE}, 400
+            return {"Error": ERROR_INVALID_CODE}, 400

@@ -4,7 +4,7 @@ echo "Installing Requirements"
 pip install -r requirements.txt
 
 echo "Auto-formatting code"
-black .
+#black .
 
 echo "Running Unit Tests"
 if ! pytest; then
