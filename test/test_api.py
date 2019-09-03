@@ -1,4 +1,5 @@
 import re
+import datetime
 from unittest.mock import MagicMock
 from shorter_app.repositories import ShorterRepository, StatsRepository
 from shorter_app.apis.shorter_api import generate_shortcode, Url, UrlItem, StatsItem
@@ -9,10 +10,15 @@ from shorter_app.validator import (
     ERROR_DUPLICATED_CODE,
     ERROR_INVALID_URL,
     ERROR_INVALID_CODE,
+    ERROR_CODE_NOT_FOUND,
 )
 
 
-class TestApi:
+def mocked_get_current_time():
+    return datetime.datetime(2020, 1, 1, 1, 1, 1)
+
+
+class TestURLApi:
     def test_generate_code(self):
         code = generate_shortcode()
         assert len(code) == 6
@@ -21,8 +27,8 @@ class TestApi:
     def test_get_shorter_list(self, mocker):
         shorter_get_all_mock = mocker.patch.object(
             ShorterRepository, "get_all",
-            return_value=[Shorter("url1", "code1"),
-                          Shorter("url2", "code2")]
+            return_value=[MagicMock(url="url1", code="code1"),
+                          MagicMock(url="url2", code="code2")]
         )
         url_api = Url()
         response, status_code = url_api.get()
@@ -38,11 +44,11 @@ class TestApi:
         validate_url_mock.return_value = None, None
         validate_code_mock = mocker.patch.object(Validator, "validate_code")
         validate_code_mock.return_value = None, None
-        shorter_mock = mocker.patch.object(
+        shorter_init_mock = mocker.patch.object(
             Shorter, "__init__", return_value=None
         )
         # shorter_mock2 = mocker.patch("shorter_app.apis.shorter_api.Shorter")
-        stats_mock = mocker.patch.object(
+        stats_init_mock = mocker.patch.object(
             Stats, "__init__", return_value=None
         )
         shorter_repository_add_mock = mocker.patch.object(
@@ -54,16 +60,15 @@ class TestApi:
         response, status_code = url_api.post()
         assert response.get("code")
         assert 201 == status_code
-        # shorter_mock2.assert_called_once_with(url="http://url.com", code="123456")
-        shorter_mock.assert_called_once_with(url="http://url.com", code="123456")
-        # datetime.now is not possible to test due the current time offset.
-        # stats_mock.assert_called_once_with(response.get("code"), datetime.now())
+        shorter_init_mock.assert_called_once_with(url="http://url.com", code="123456")
+        # TODO check how to mock this function
+        # stats_init_mock.assert_called_once_with(response.get("code"), mocked_get_current_time())
         validate_url_mock.assert_called_once_with("http://url.com")
         validate_code_mock.assert_called_once_with("123456")
 
         # TODO fix this calls
-        #shorter_repository_add_mock.assert_called_once_with(shorter_mock.result_value)
-        #stats_repository_add_mock.assert_called_once_with(stats_mock)
+        # shorter_repository_add_mock.assert_called_once_with(shorter_mock.result_value)
+        # stats_repository_add_mock.assert_called_once_with(stats_mock)
 
     def test_post_invalid_code(self, mocker):
         api_mock = MagicMock()
@@ -116,41 +121,6 @@ class TestApi:
         validate_url_mock.assert_called_once_with("http://url.com")
         validate_code_mock.assert_called_once_with("123456")
 
-    def test_generate_code(self, mocker):
-        api_mock = MagicMock()
-        api_mock.payload = dict(url="http://url.com")
-        url_api = Url(api=api_mock)
-        validate_url_mock = mocker.patch.object(Validator, "validate_url")
-        validate_url_mock.return_value = None, None
-        with mocker.patch('shorter_app.apis.shorter_api.generate_shortcode') as generate_shortcode_mock:
-            generate_shortcode_mock.return_value  = "111111"
-
-            shorter_mock = mocker.patch.object(
-                Shorter, "__init__", return_value=None
-            )
-            # shorter_mock2 = mocker.patch("shorter_app.apis.shorter_api.Shorter")
-            stats_mock = mocker.patch.object(
-                Stats, "__init__", return_value=None
-            )
-            shorter_repository_add_mock = mocker.patch.object(
-                ShorterRepository, "add"
-            )
-            stats_repository_add_mock = mocker.patch.object(
-                StatsRepository, "add"
-            )
-            response, status_code = url_api.post()
-            assert response.get("code")
-            assert 201 == status_code
-            # shorter_mock2.assert_called_once_with(url="http://url.com", code="123456")
-            shorter_mock.assert_called_once_with(url="http://url.com")
-            # datetime.now is not possible to test due the current time offset.
-            # stats_mock.assert_called_once_with(response.get("code"), datetime.now())
-            validate_url_mock.assert_called_once_with("http://url.com")
-            generate_shortcode_mock.assert_called_once_with()
-            # TODO fix this calls
-            # shorter_repository_add_mock.assert_called_once_with(shorter_mock.result_value)
-            # stats_repository_add_mock.assert_called_once_with(stats_mock)
-
     def test_get_shorter_item(self, mocker):
         url_api = UrlItem()
 
@@ -177,3 +147,33 @@ class TestApi:
         url_api = UrlItem()
         response, status_code = url_api.get("XXXXXX")
         assert status_code == 404
+
+
+class TestStatsApi:
+    def test_get_shorter_list(self, mocker):
+        stats_get_all_mock = mocker.patch.object(
+            StatsRepository, "get",
+            return_value=MagicMock(created_at="2019-09-03 00:00:00",
+                                   last_usage="2019-10-03 00:00:00",
+                                   usage_count=1)
+
+        )
+        mock_api = MagicMock(code="123456")
+        stats_api = StatsItem(mock_api)
+        response, status_code = stats_api.get("123456")
+        assert status_code == 200
+        assert response.get("created_at") == "2019-09-03 00:00:00"
+        assert response.get("last_usage") == "2019-10-03 00:00:00"
+        assert response.get("usage_count") == '1'
+        stats_get_all_mock.assert_called_once_with("123456")
+
+    def test_get_shorter_list_error(self, mocker):
+        stats_get_all_mock = mocker.patch.object(
+            StatsRepository, "get",
+            return_value=None)
+        mock_api = MagicMock(code="123456")
+        stats_api = StatsItem(mock_api)
+        response, status_code = stats_api.get("123456")
+        assert status_code == 404
+        assert response.get("Error") == ERROR_CODE_NOT_FOUND
+        stats_get_all_mock.assert_called_once_with("123456")

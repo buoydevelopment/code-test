@@ -11,6 +11,10 @@ from datetime import datetime
 api = Namespace("shorter", description="Shorter App")
 
 
+def get_current_time():
+    return datetime.now()
+
+
 def generate_shortcode():
     return "".join(random.choices(string.ascii_letters + string.digits, k=6))
 
@@ -47,7 +51,7 @@ class Url(Resource):
             code = generate_shortcode()
         shorter = Shorter(url=url, code=code)
         ShorterRepository.add(shorter)
-        created_at = datetime.now()
+        created_at = get_current_time()
         stats = Stats(code, created_at)
         StatsRepository.add(stats)
         return {"code": code}, 201
@@ -63,7 +67,7 @@ class UrlItem(Resource):
             return {"Error": ERROR_CODE_NOT_FOUND}, 404
         stats = StatsRepository.get(code)
         stats.usage_count += 1
-        stats.last_usage = datetime.now()
+        stats.last_usage = get_current_time()
         StatsRepository.commit()
         return redirect(result.url)
 
@@ -80,4 +84,4 @@ class StatsItem(Resource):
             "created_at": str(result.created_at),
             "last_usage": str(result.last_usage),
             "usage_count": str(result.usage_count),
-        }
+        }, 200
