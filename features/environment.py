@@ -2,7 +2,7 @@ import os
 import tempfile
 from behave import fixture, use_fixture
 
-from app import create_app
+from shorter_app.app import create_app
 from shorter_app.database import init_db
 from shorter_app.config import TestConfig
 

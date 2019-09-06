@@ -35,7 +35,9 @@ class TestURLApi:
         assert status_code == 200
         assert len(response) == 2
         assert response[0].get("code") == "code1"
+        assert response[0].get("url") == "url1"
         assert response[1].get("code") == "code2"
+        assert response[1].get("url") == "url2"
         shorter_get_all_mock.assert_called_once_with()
 
     def test_post_shorter_item(self, mocker):

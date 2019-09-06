@@ -37,6 +37,7 @@ response_shorter_url = api.model(
     "Get Short URL list (Response)",
     {
         "code": fields.String,
+        "url": fields.String,
     },
 )
 
