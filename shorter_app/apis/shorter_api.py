@@ -1,7 +1,7 @@
 import random
 import string
 from flask import redirect
-from flask_restplus import Namespace, Resource
+from flask_restplus import Namespace, Resource, fields, marshal
 from shorter_app.models import Shorter, Stats
 from shorter_app.repositories import ShorterRepository, StatsRepository
 from shorter_app.validator import Validator, ERROR_CODE_NOT_FOUND
@@ -25,16 +25,48 @@ class HealtCheck(Resource):
         return {"Service": "OK"}
 
 
+request_shorter_url = api.model(
+    "Post Short URL (Request)",
+    {
+        "code": fields.String,
+        "url": fields.String,
+    },
+)
+
+response_shorter_url = api.model(
+    "Get Short URL list (Response)",
+    {
+        "code": fields.String,
+    },
+)
+
+response_stats = api.model(
+    "Get Stats(Response)",
+    {
+        "created_at": fields.String,
+        "last_usage": fields.String,
+        "usage_count": fields.String,
+    },
+)
+
+
 @api.route("/urls/")
 class Url(Resource):
-    @api.doc("Get shorter url")
-    @api.response(200, "Get Short URL  list")
+    @api.doc("Get short url")
+    # TODO update response_shorter_url
+    @api.response(200, "Get Short URL list", response_shorter_url)
+    @api.response(401, "Unauthorized")
+    @api.response(400, "Bad Request")
     def get(self):
         shorter_list = ShorterRepository.get_all()
-        return {"shorter_list": [s.as_dict() for s in shorter_list]}, 200
+        return marshal(shorter_list, response_shorter_url), 200
 
-    @api.doc("Post shorter url")
-    @api.response(201, "Short URL Created")
+    @api.doc("Post short url")
+    @api.expect(request_shorter_url)
+    @api.response(401, "Unauthorized")
+    @api.response(400, "Bad Request")
+    @api.response(409, "Duplicated code")
+    @api.response(201, "Short URL Created", response_shorter_url)
     def post(self):
         url = self.api.payload.get("url")
         code = self.api.payload.get("code")
@@ -54,12 +86,15 @@ class Url(Resource):
         created_at = get_current_time()
         stats = Stats(code, created_at)
         StatsRepository.add(stats)
-        return {"code": code}, 201
+        return marshal(shorter, response_shorter_url), 201
 
 
 @api.route("/urls/<string:code>/")
 class UrlItem(Resource):
-    @api.doc("Get shorter url")
+    @api.doc("Get short url by code")
+    @api.response(200, "Get Short URL list", response_shorter_url)
+    @api.response(401, "Unauthorized")
+    @api.response(404, "Not Found")
     def get(self, code):
         result = ShorterRepository.get(code)
 
@@ -75,13 +110,12 @@ class UrlItem(Resource):
 @api.route("/urls/<string:code>/stats/")
 class StatsItem(Resource):
     @api.doc("Get code stast")
+    @api.response(200, "Get Short URL stasts", response_stats)
+    @api.response(401, "Unauthorized")
+    @api.response(404, "Not Found")
     def get(self, code):
         result = StatsRepository.get(code)
         if not result:
             return {"Error": ERROR_CODE_NOT_FOUND}, 404
 
-        return {
-            "created_at": str(result.created_at),
-            "last_usage": str(result.last_usage),
-            "usage_count": str(result.usage_count),
-        }, 200
+        return marshal(result, response_stats), 200

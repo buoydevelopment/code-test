@@ -131,3 +131,9 @@ def test_get_code_stats(context):
 def test_get_invalid_code_stats(context):
     response = context.client.get("/shorter/urls/XXXX/stats/")
     context.response = response
+
+
+@when("I get a valid short URL with a valid code")
+def test_get_invalid_code_stats(context):
+    response = context.client.get("/shorter/urls/")
+    context.response = response

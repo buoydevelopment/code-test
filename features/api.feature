@@ -5,6 +5,10 @@ Feature: Test Shorter API
     Then I get status code 200
     And the value of Service is OK
 
+  Scenario: Get a short URL list
+    When I get a valid short URL with a valid code
+    Then I get status code 200
+
 
   Scenario: Create a short URL
     When I post a valid short URL with a valid code

@@ -7,6 +7,7 @@ from shorter_app.database import db_session, init_db
 def create_app(config=DefaultConfig):
     app = Flask(__name__)
     app.config.from_object(config)
+    api._doc = app.config.get("SWAGGER_DOC_PATH")
     api.init_app(
         app,
         title="Shorter Application",

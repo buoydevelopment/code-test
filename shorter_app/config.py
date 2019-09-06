@@ -15,6 +15,7 @@ class FixedConfig:
     DATABASE_NAME = "shorter"
     USE_API_STUBS = False
     INTERNAL_API_TIMEOUT = 3.5
+    SWAGGER_DOC_PATH = "/documents/"
 
 
 class DefaultConfig(FixedConfig):

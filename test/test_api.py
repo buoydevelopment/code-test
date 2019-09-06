@@ -27,13 +27,15 @@ class TestURLApi:
     def test_get_shorter_list(self, mocker):
         shorter_get_all_mock = mocker.patch.object(
             ShorterRepository, "get_all",
-            return_value=[MagicMock(url="url1", code="code1"),
-                          MagicMock(url="url2", code="code2")]
+            return_value=[{"url": "url1", "code": "code1"},
+                          {"url": "url2", "code": "code2"}]
         )
         url_api = Url()
         response, status_code = url_api.get()
         assert status_code == 200
-        assert len(response.get("shorter_list")) == 2
+        assert len(response) == 2
+        assert response[0].get("code") == "code1"
+        assert response[1].get("code") == "code2"
         shorter_get_all_mock.assert_called_once_with()
 
     def test_post_shorter_item(self, mocker):
@@ -44,9 +46,9 @@ class TestURLApi:
         validate_url_mock.return_value = None, None
         validate_code_mock = mocker.patch.object(Validator, "validate_code")
         validate_code_mock.return_value = None, None
-        shorter_init_mock = mocker.patch.object(
-            Shorter, "__init__", return_value=None
-        )
+        #shorter_init_mock = mocker.patch.object(
+        #    Shorter, "__init__", return_value=None
+        #)
         # shorter_mock2 = mocker.patch("shorter_app.apis.shorter_api.Shorter")
         stats_init_mock = mocker.patch.object(
             Stats, "__init__", return_value=None
@@ -58,16 +60,16 @@ class TestURLApi:
             StatsRepository, "add"
         )
         response, status_code = url_api.post()
-        assert response.get("code")
+        assert response.get("code") == "123456"
         assert 201 == status_code
-        shorter_init_mock.assert_called_once_with(url="http://url.com", code="123456")
+        #shorter_init_mock.assert_called_once_with(url="http://url.com", code="123456")
         # TODO check how to mock this function
         # stats_init_mock.assert_called_once_with(response.get("code"), mocked_get_current_time())
         validate_url_mock.assert_called_once_with("http://url.com")
         validate_code_mock.assert_called_once_with("123456")
 
         # TODO fix this calls
-        # shorter_repository_add_mock.assert_called_once_with(shorter_mock.result_value)
+        # shorter_repository_add_mock.assert_called_once_with(shorter_mock)
         # stats_repository_add_mock.assert_called_once_with(stats_mock)
 
     def test_post_invalid_code(self, mocker):
