@@ -83,10 +83,34 @@ def url_post():
 @app.route('/<code>/stats', methods=['GET'])
 def url_stats(code: str):
     """Shows stats for a given code"""
-    return jsonify(data={}), 200
+    _, exists = utils.code_exists(code)
+    if not exists:
+        return jsonify(error="Code Not Found"), 404
+    else:
+        created_at, last_usage, usage_count = utils.get_stats(
+            code
+        )
+
+        result = {
+            'created_at': utils.to_iso8601(created_at),
+            'usage_count': usage_count
+        }
+        if last_usage:
+            result['last_usage'] = utils.to_iso8601(last_usage)
+
+        return jsonify(result), 200
+
 
 
 @app.route('/<code>', methods=['GET'])
 def url_get(code: str):
     """Redirects to a URL given a code else 404"""
-    return redirect("http://ddg.gg/", code=302)
+    q, exists = utils.code_exists(code)
+    if exists:
+        url_id, url = q.execute().cursor.fetchone()
+        utils.bump_stats(url_id)
+        return redirect(url, code=302)
+
+    else:
+        return jsonify(error="Code Not Found"), 404
+

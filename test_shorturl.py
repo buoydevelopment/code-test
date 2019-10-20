@@ -24,21 +24,6 @@ class ShorturlTests(unittest.TestCase):
                                 follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
-    # def test_url_get_ok(self):
-    #     response = self.app.get('/abc123',
-    #                             follow_redirects=False)
-    #     self.assertEqual(response.status_code, 302)
-
-    # def test_url_get_err(self):
-    #     response = self.app.get('/abc123',
-    #                             follow_redirects=False)
-    #     self.assertEqual(response.status_code, 302)
-
-    # def test_url_stats(self):
-    #     response = self.app.get('/abc123/stats',
-    #                             follow_redirects=True)
-    #     self.assertEqual(response.status_code, 200)
-
     def test_url_post_201(self):
         response = self.app.post('/urls',
                                  data=json.dumps(self.data),
@@ -86,6 +71,54 @@ class ShorturlTests(unittest.TestCase):
                                  data=json.dumps(self.data),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 422)
+
+
+    def test_url_post_422(self):
+        self.app.post('/urls',
+                      data=json.dumps(self.data),
+                      content_type='application/json')
+        response = self.app.post('/urls',
+                                 data=json.dumps(self.data),
+                                 content_type='application/json')
+        self.assertEqual(response.status_code, 422)
+
+    def test_url_get_302(self):
+        post = self.app.post('/urls',
+                                 data=json.dumps({
+                                     "url": self.data["url"]
+                                 }),
+                                 content_type='application/json')
+        code = post.json["code"]
+        response = self.app.get(f"/{code}",
+                                follow_redirects=False)
+        self.assertEqual(response.status_code, 302)
+
+    def test_url_get_404(self):
+        code = "err404"
+        response = self.app.get(f"/{code}",
+                                follow_redirects=False)
+        self.assertEqual(response.status_code, 404)
+
+
+    def test_url_stats_200(self):
+        post = self.app.post('/urls',
+                                 data=json.dumps({
+                                     "url": self.data["url"]
+                                 }),
+                                 content_type='application/json')
+        code = post.json["code"]
+        usage_expected = 5
+        for i in range(usage_expected):
+            self.app.get(f"/{code}",
+                         follow_redirects=False)
+
+        response = self.app.get(f"/{code}/stats")
+        self.assertEqual(response.json["usage_count"],
+                         usage_expected)
+
+    def test_url_stats_404(self):
+        response = self.app.get("/err404/stats")
+        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == "__main__":

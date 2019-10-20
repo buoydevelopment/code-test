@@ -44,7 +44,10 @@ def insert_url(url:str, code:str) -> int:
 def bump_stats(url_id: int) -> tuple:
     """Updates Stat records"""
     q = (Stats
-         .update({Stats.usage_count: Stats.usage_count+1})
+         .update({
+             Stats.usage_count: Stats.usage_count+1,
+             Stats.last_usage: now()
+         })
          .where(Stats.url_id==url_id)
          .execute())
 
