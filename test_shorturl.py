@@ -1,16 +1,31 @@
-import os
+import utils
 import unittest
 from shorturl import app
+
 
 class ShorturlTests(unittest.TestCase):
     def setUp(self):
         app.config["TESTING"] = True
         app.config["DEBUG"] = True
         self.app = app.test_client()
+        utils.create_tables()
+
+        self.test_data = {
+            "url":"https://sdf.org/",
+            "code": "sdforg",
+            "id": 0
+        }
+        self.test_data["id"] = utils.insert_url(
+            self.test_data["url"],
+            self.test_data["code"]
+        )
+
+        print (self.test_data)
+
         self.assertEqual(app.debug, True)
 
     def tearDown(self):
-        pass
+        utils.drop_tables()
 
     def test_index(self):
         response = self.app.get('/',
