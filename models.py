@@ -20,7 +20,7 @@ class BaseModel(Model):
 
 class URL(BaseModel):
     url = CharField(max_length=35)
-    code = CharField(max_length=6)
+    code = CharField(max_length=6, unique=True)
 
     class Meta:
         table_name = 'urls'

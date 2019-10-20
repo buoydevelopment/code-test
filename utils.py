@@ -41,6 +41,31 @@ def insert_url(url:str, code:str) -> int:
     return url_id
 
 
+def bump_stats(url_id: int) -> tuple:
+    """Updates Stat records"""
+    q = (Stats
+         .update({Stats.usage_count: Stats.usage_count+1})
+         .where(Stats.url_id==url_id)
+         .execute())
+
+    return q
+
+
+def get_stats(code: str) -> tuple:
+    """Returns Stats data"""
+    q = (Stats
+         .select(
+             Stats.created_at,
+             Stats.last_usage,
+             Stats.usage_count
+         )
+         .join_from(Stats, URL)
+         .where(URL.code==code)
+         .execute())
+
+    return q.cursor.fetchone()
+
+
 def gen_code() -> str:
     """Generates a code"""
     alphabet = string.ascii_letters + string.digits

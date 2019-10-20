@@ -1,5 +1,4 @@
 import utils
-import datetime
 import unittest
 
 
@@ -7,14 +6,9 @@ class UtilsTests(unittest.TestCase):
     def setUp(self):
         utils.create_tables()
         self.data = {
-            "url": "https://sdf.org/",
-            "code": "sdforg",
-            "id": 0
+            "url": "https://ddg.gg/",
+            "code": utils.gen_code(),
         }
-        self.data["id"] = utils.insert_url(
-            self.data["url"],
-            self.data["code"],
-        )
 
     def tearDown(self):
         utils.drop_tables()
@@ -39,11 +33,27 @@ class UtilsTests(unittest.TestCase):
     def test_insert_url(self):
         url_id = utils.insert_url(
             self.data["url"],
-            utils.gen_code()
+            self.data["code"]
         )
         self.assertEqual(isinstance(url_id, int), True)
 
+    def test_stats(self):
+        _id = utils.insert_url(
+            self.data["url"],
+            self.data["code"]
+        )
+        for i in range(1,5):
+            utils.bump_stats(_id)
+            created_at, last_usage, usage_count = utils.get_stats(
+                self.data["code"]
+            )
+            self.assertEqual(usage_count, i)
+
     def test_code_exists_true(self):
+        utils.insert_url(
+            self.data["url"],
+            self.data["code"]
+        )
         _, exists = utils.code_exists(self.data["code"])
         self.assertEqual(exists, True)
 
