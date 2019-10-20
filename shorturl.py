@@ -7,7 +7,8 @@ from models import (
 from flask import (
     Flask,
     jsonify,
-    redirect
+    request,
+    redirect,
 )
 
 
@@ -54,8 +55,29 @@ def index():
 
 @app.route('/urls', methods=['POST'])
 def url_post():
-    """Save URLs"""
-    return jsonify(code="abc123"), 201
+    """Saves URLs if ok, else wont (?)"""
+    data = request.json.copy()
+    if "url" not in list(data.keys()):
+        return jsonify(error="URL not provided"), 400
+
+    else:
+        if "code" not in list(data.keys()):
+            code = utils.gen_code()
+        else:
+            code = data.get('code')
+            if not utils.is_valid_code(code):
+                return jsonify(error="Code not valid"), 409
+
+        _, exists = utils.code_exists(code)
+        if exists:
+            return jsonify(error="Code in use"), 422
+        else:
+            if utils.is_valid_url(data.get('url')):
+                utils.insert_url(data.get('url'), code)
+            else:
+                return jsonify(error="URL not valid"), 409
+
+        return jsonify(code=code), 201
 
 
 @app.route('/<code>/stats', methods=['GET'])
