@@ -13,22 +13,22 @@ class UtilsTests(unittest.TestCase):
     def tearDown(self):
         utils.drop_tables()
 
-    def test_is_valid_url(self):
-        self.assertEqual(
-            utils.is_valid_url(self.data["url"]),
-            True
-        )
+    def test_is_valid_url_ok(self):
+        self.assertTrue(utils.is_valid_url(self.data["url"]))
 
-    def test_is_valid_code(self):
-        self.assertEqual(
-            utils.is_valid_code(self.data["code"]),
-            True
-        )
+    def test_is_valid_url_eerr(self):
+        self.assertFalse(utils.is_valid_url("this will fail"))
+
+    def test_is_valid_code_ok(self):
+        self.assertTrue(utils.is_valid_code(self.data["code"]))
+
+    def test_is_valid_code_err(self):
+        self.assertFalse(utils.is_valid_code("this will fail"))
 
     def test_gen_code(self):
         code = utils.gen_code()
         self.assertEqual(len(code), 6)
-        self.assertEqual(utils.is_valid_code(code), True)
+        self.assertTrue(utils.is_valid_code(code))
 
     def test_insert_url(self):
         url_id = utils.insert_url(
@@ -55,11 +55,11 @@ class UtilsTests(unittest.TestCase):
             self.data["code"]
         )
         _, exists = utils.code_exists(self.data["code"])
-        self.assertEqual(exists, True)
+        self.assertTrue(exists)
 
     def test_code_exists_false(self):
         _, exists = utils.code_exists("abc123")
-        self.assertEqual(exists, False)
+        self.assertFalse(exists)
 
     def test_date_iso8601(self):
         now = utils.now()
