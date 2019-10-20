@@ -1,9 +1,9 @@
-import utils
+import datetime
 from peewee import *
 from os import environ as env
 
 if env.get('FLASK_DEBUG', 0):
-    db = SqliteDatabase('shorturl.db')
+    db = SqliteDatabase(':memory:')
 else:
     db = PostgresqlDatabase(
         env.get('POSTGRES_DB', 'postgres'),
@@ -43,7 +43,7 @@ class URL(BaseModel):
 
 class Stats(BaseModel):
     url = ForeignKeyField(URL, backref='url')
-    created_at = DateTimeField(default=utils.now)
+    created_at = DateTimeField(default=datetime.datetime.now)
     last_usage = DateTimeField(null=True)
     usage_count = IntegerField()
 
