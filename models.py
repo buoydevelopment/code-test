@@ -2,7 +2,7 @@ import datetime
 from peewee import *
 from os import environ as env
 
-if env.get('FLASK_DEBUG', 0):
+if env.get('FLASK_DEBUG') == 1:
     db = SqliteDatabase(':memory:')
 else:
     db = PostgresqlDatabase(
