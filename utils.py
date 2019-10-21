@@ -18,7 +18,7 @@ def now() -> datetime.datetime:
 def to_iso8601(dt: str) -> datetime.datetime:
     """Convert string to iso-8601"""
     return (datetime.datetime
-            .strptime(dt, "%Y-%m-%d %H:%M:%S.%f")
+            .strptime(str(dt), "%Y-%m-%d %H:%M:%S.%f")
             .isoformat())
 
 
