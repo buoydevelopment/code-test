@@ -1,9 +1,4 @@
 import utils
-from models import (
-    db,
-    URL,
-    Stats
-)
 from flask import (
     Flask,
     jsonify,

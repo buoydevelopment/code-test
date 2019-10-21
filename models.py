@@ -2,21 +2,11 @@ import datetime
 from peewee import *
 from os import environ as env
 
-if env.get('FLASK_DEBUG') == 1:
-    db = SqliteDatabase(':memory:')
-else:
-    db = PostgresqlDatabase(
-        env.get('POSTGRES_DB', 'postgres'),
-        user=env.get('POSTGRES_USER', 'postgres'),
-        password=env.get('POSTGRES_PASSWORD', 'postgres'),
-        host=env.get('DB_HOST', 'localhost'),
-    )
-
+db_proxy = Proxy()
 
 class BaseModel(Model):
     class Meta:
-        database = db
-
+        database = db_proxy
 
 class URL(BaseModel):
     url = CharField(max_length=35)
@@ -66,3 +56,16 @@ class Stats(BaseModel):
         url = self.url
         count = self.usage_count
         return f"{url} ({count})"
+
+
+
+db = SqliteDatabase(':memory:')
+if int(env.get('FLASK_DEBUG')) == 0:
+    db = PostgresqlDatabase(
+        env.get('POSTGRES_DB', 'postgres'),
+        user=env.get('POSTGRES_USER', 'postgres'),
+        password=env.get('POSTGRES_PASSWORD', 'postgres'),
+        host=env.get('DB_HOST', 'localhost'),
+    )
+
+db_proxy.initialize(db)
