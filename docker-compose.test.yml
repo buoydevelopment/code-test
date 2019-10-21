@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  web:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    image: buoydev-py
+    container_name: buoydev-test
+    command: python -m unittest discover
+    environment:
+      FLASK_APP: shorturl.py
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+    volumes:
+      - .:/app/
