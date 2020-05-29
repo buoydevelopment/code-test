@@ -10,6 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2020_05_29_182550) do
+
+  create_table "urls", force: :cascade do |t|
+    t.string "url", null: false
+    t.string "code"
+    t.integer "usage_count"
+    t.datetime "last_usage"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_urls_on_code"
+  end
 
 end
