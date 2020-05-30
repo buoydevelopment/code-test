@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2020_05_29_182550) do
   create_table "urls", force: :cascade do |t|
     t.string "url", null: false
     t.string "code"
-    t.integer "usage_count"
+    t.integer "usage_count", default: 0
     t.datetime "last_usage"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

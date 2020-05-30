@@ -2,18 +2,13 @@ class StatsController < ApplicationController
   before_action :set_url, only: [:show]
 
   def show
-    render json: {
-      created_at: @url.created_at,
-      last_usage: @url.last_usage,
-      usage_count: @url.usage_count
-    },
-    status: :ok
+    render json: UrlSerializer.new(@url).serializable_hash[:data][:attributes], status: :ok
   end
 
   private
 
   def set_url
-    @url = Url.find_by!(code: params[:url_code])
+    @url = Url.find_by!(code: params[:code])
   rescue ActiveRecord::RecordNotFound
     render status: :not_found
   end
