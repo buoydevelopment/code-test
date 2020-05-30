@@ -3,7 +3,7 @@ class Url < ApplicationRecord
 
   validates :url, presence: true
   validates :code,
-    length: { is: 6 },
+    length: { maximum: 6 },
     uniqueness: true
 
   def add_visit
